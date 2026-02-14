@@ -32,9 +32,9 @@ export default function App() {
       <div className="cardWrap">
         <div className="card">
           {!revealed ? (
-            <button className="btn" type="button" onClick={onClick}>
-              Pulsa para ver tu sorpresa de San Valentín 💘
-            </button>
+              <button className="btn" type="button" onClick={onClick}>
+                Pulsa para ver tu sorpresa de San Valentín 💘
+              </button>
           ) : (
             <div className="emojiWrap">
               <div className="emoji" aria-label="emoji">

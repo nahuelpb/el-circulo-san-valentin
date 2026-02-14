@@ -87,26 +87,11 @@ body {
 
 .card {
   width: min(420px, 100%);
-  border-radius: 28px;
-
-  /* MUCHO más transparente */
-  background: rgba(255, 255, 255, 0.25);
-
-  /* Blur más fuerte estilo iOS */
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-
-  /* Borde casi invisible */
-  border: 1px solid rgba(255, 255, 255, 0.3);
-
-  /* Sombra muy suave */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
-
-  padding: 20px;
-  min-height: 150px;
-
-  display: grid;
-  place-items: center;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  min-height: unset;
 }
 
 .btn {
