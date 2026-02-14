@@ -3,9 +3,8 @@ import { useState } from "react";
 export default function App() {
   const [revealed, setRevealed] = useState(false);
 
-  // "cover" = llena pantalla (puede recortar)
   // "contain" = muestra toda la imagen (puede dejar bandas)
-  const FIT = "cover";
+  const FIT = "contain";
 
   const onClick = () => {
     if (navigator.vibrate) navigator.vibrate(20);
