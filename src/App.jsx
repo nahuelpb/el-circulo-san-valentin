@@ -50,7 +50,7 @@ export default function App() {
                   marginTop: "-6px",
                 }}
               >
-                ¡Caíste!!!
+                Caíste!!!
               </div>
 
               <button className="exitBtn" onClick={onExit}>
