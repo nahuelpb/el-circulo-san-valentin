@@ -1,6 +1,10 @@
-/* --- Evita saltos por scrollbar --- */
+/* =========================
+   GLOBAL / iOS-SAFE BASE
+   ========================= */
+
+/* Evita “saltos” de ancho cuando aparece/desaparece scrollbar (desktop) */
 html {
-  scrollbar-gutter: stable; /* reserva el hueco aunque no haya scroll */
+  scrollbar-gutter: stable;
 }
 
 html,
@@ -10,45 +14,62 @@ body,
   margin: 0;
 }
 
-/* Importante: si no quieres scroll nunca */
+/* Sin scroll y tipografía base */
 body {
   overflow: hidden;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Contenedor principal:
+   - 100svh: viewport estable en iOS (sin saltos por barras)
+   - 100dvh: viewport dinámico en navegadores modernos */
 .app {
   position: relative;
-  height: 100%;
+  height: 100svh;
+  height: 100dvh;
   overflow: hidden;
 }
 
-/* Fondo */
+/* =========================
+   BACKGROUND IMAGE
+   ========================= */
+
+/* Se verá SOLO si usas "contain" y quedan bandas */
 .bgFill {
   position: absolute;
   inset: 0;
-  background: #0b0b0c; /* solo se verá si usas contain y quedan bandas */
+  background: #0b0b0c;
   z-index: 0;
 }
 
+/* Imagen de fondo (usamos <img>) */
 .bg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   z-index: 1;
-  /* object-position ajusta qué parte prioriza si usas cover */
+
+  /* Ajusta el “encuadre” cuando uses cover */
   object-position: center;
 }
 
+/* Llena pantalla (puede recortar) */
 .bg.cover {
-  object-fit: cover; /* llena y puede recortar */
+  object-fit: cover;
 }
 
+/* Muestra la imagen completa (puede dejar bandas) */
 .bg.contain {
-  object-fit: contain; /* muestra entera y puede dejar bandas */
+  object-fit: contain;
 }
 
-/* Modal */
+/* =========================
+   MODAL / CARD
+   ========================= */
+
 .cardWrap {
   position: relative;
   z-index: 2;
@@ -57,10 +78,11 @@ body {
   display: grid;
   place-items: center;
 
-  /* lo bajamos un poco */
-  padding-top: 8vh;
-  padding-left: 24px;
-  padding-right: 24px;
+  /* Baja un poco el modal + respeta notch/safe areas (iPhone) */
+  padding-top: calc(8vh + env(safe-area-inset-top));
+  padding-left: calc(24px + env(safe-area-inset-left));
+  padding-right: calc(24px + env(safe-area-inset-right));
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .card {
@@ -68,12 +90,13 @@ body {
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* iOS */
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
   padding: 18px;
 
-  /* altura mínima fija para que no “bombee” el layout */
-  min-height: 110px;
+  /* Mantiene layout estable entre estados */
+  min-height: 150px;
 
   display: grid;
   place-items: center;
@@ -87,21 +110,15 @@ body {
   padding: 18px 16px;
   font-weight: 700;
   font-size: 16px;
-  color: white;
+  color: #fff;
   background: linear-gradient(90deg, #f43f5e, #ec4899);
   box-shadow: 0 12px 24px rgba(244, 63, 94, 0.25);
   transform: translateZ(0);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn:active {
   transform: scale(0.98);
-}
-
-.emoji {
-  font-size: 110px;
-  line-height: 1;
-  user-select: none;
-  transform: translateZ(0);
 }
 
 .emojiWrap {
@@ -111,6 +128,14 @@ body {
   gap: 18px;
 }
 
+.emoji {
+  font-size: 110px;
+  line-height: 1;
+  user-select: none;
+  transform: translateZ(0);
+}
+
+/* Botón de salir */
 .exitBtn {
   border: none;
   cursor: pointer;
@@ -119,16 +144,18 @@ body {
   font-weight: 600;
   font-size: 15px;
   color: #111;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(6px);
-  border: 1px solid rgba(0,0,0,0.1);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
-  transition: all 0.2s ease;
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .exitBtn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 10px 18px rgba(0,0,0,0.18);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.18);
 }
 
 .exitBtn:active {

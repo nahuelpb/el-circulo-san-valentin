@@ -3,17 +3,22 @@ import { useState } from "react";
 export default function App() {
   const [revealed, setRevealed] = useState(false);
 
-  // Cambia a "contain" si NO quieres recorte (puede dejar bandas)
-  const FIT = "cover"; // "cover" | "contain"
+  // "cover" = llena pantalla (puede recortar)
+  // "contain" = muestra toda la imagen (puede dejar bandas)
+  const FIT = "cover";
 
   const onClick = () => {
     if (navigator.vibrate) navigator.vibrate(20);
     setRevealed(true);
   };
 
+  const onExit = () => {
+    setRevealed(false);
+  };
+
   return (
     <div className="app">
-      {/* Fondo como IMG para control total */}
+      {/* Imagen de fondo */}
       <img
         className={`bg ${FIT}`}
         src="/hap-hee-hee.jpg"
@@ -21,10 +26,10 @@ export default function App() {
         aria-hidden="true"
       />
 
-      {/* Si usas contain, esto rellena las bandas con un color suave */}
+      {/* Fondo para bandas cuando se usa "contain" */}
       <div className="bgFill" aria-hidden="true" />
 
-      {/* “Modal” fijo: no cambia ancho/alto al cambiar contenido */}
+      {/* Modal */}
       <div className="cardWrap">
         <div className="card">
           {!revealed ? (
@@ -33,12 +38,23 @@ export default function App() {
             </button>
           ) : (
             <div className="emojiWrap">
-              <div className="emoji" aria-label="emoji">👌</div>
+              <div className="emoji" aria-label="emoji">
+                👌
+              </div>
 
-              <button
-                className="exitBtn"
-                onClick={() => setRevealed(false)}
+              {/* TEXTO NUEVO */}
+              <div
+                style={{
+                  fontSize: "28px",
+                  fontWeight: "800",
+                  letterSpacing: "0.5px",
+                  marginTop: "-6px",
+                }}
               >
+                ¡Caíste!!!
+              </div>
+
+              <button className="exitBtn" onClick={onExit}>
                 Salir
               </button>
             </div>
